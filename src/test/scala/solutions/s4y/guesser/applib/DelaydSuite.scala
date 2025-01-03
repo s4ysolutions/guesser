@@ -19,11 +19,11 @@ class DelaydSuite extends munit.FunSuite:
   test("Expression must be evaluated after delay"):
     val delayed = DelayedWithJVMPromise
     val start = System.currentTimeMillis
-    var calledAt: Long = 0;
+    var calledAt: Long = 0
     val future = delayed.post(500.millis){
       calledAt = System.currentTimeMillis
       42
-    };
+    }
     val result = Await.result(future, 2000.millis)
     val end = System.currentTimeMillis
     assertEquals(result, 42)
