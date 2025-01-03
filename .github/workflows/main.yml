@@ -10,20 +10,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      JAVA_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - name: Setup JDK
+        uses: actions/setup-java@v4
         with:
-          channel: stable
-          flutter-version: 3.27.1
-      - run: flutter --version
-      - run: flutter pub get
-      - run: flutter test
-      - run: flutter build web --pwa-strategy=none
+          distribution: temurin
+          java-version: 21
+          cache: sbt
+      - name: Setup SBT
+        uses: sbt/setup-sbt@v1
+
+      - name: Setup Node.js (BUN)
+        uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install
+      - name: Build and test
+        run: bun run build
+
       - uses: pocket-apps/action-setup-firebase@v2
         with:
           firebase-token: ${{ secrets.FIREBASE_TOKEN }}
