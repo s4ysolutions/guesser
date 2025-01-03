@@ -27,7 +27,7 @@ class GuessService(using delayed: Delayed, random: Random) {
 
   def history: Seq[Guess] = historyBuffer.toSeq
   val historyNotifier: EventStream[Unit] = historyNotifierBus.stream
-  def statistic: Statistics = Statistics(historyBuffer.size, historyBuffer.count(_.isCorrect), historyBuffer.count(!_.isCorrect))
+  def statistic: Statistics = Statistics(historyBuffer.count(_.isCorrect), historyBuffer.count(!_.isCorrect))
 
   def guess(number: Int): Future[Boolean] = {
     delayed {

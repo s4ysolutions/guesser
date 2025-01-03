@@ -8,13 +8,16 @@ def Statistics()(using vmf: ViewModelFactory[StatisticsViewModel]): Element =
   val viewModel = vmf()
   val n = viewModel.notifier
   div(cls := "pt-4",
-    PanelTitle( "Stats"),
-    p(text <-- n.startWith(viewModel.statistics.total).map(
-      _ => s"Total: " + viewModel.statistics.total
+    PanelTitle("Stats"),
+    p(text <-- n.startWith(()).map(
+      _ => s"Total: " + viewModel.statistics.total)
+    ),
+    p(text <-- n.startWith(()).map(
+      _ => s"Correctness: " + viewModel.statistics.correctRateString
     )),
-    p(text <-- n.startWith(viewModel.statistics.total).map(
+    p(text <-- n.startWith(()).map(
       _ => s"Correct: " + viewModel.statistics.correct
     )),
-    p(text <-- n.startWith(viewModel.statistics.total).map(
+    p(text <-- n.startWith(()).map(
       _ => s"Wrong: " + viewModel.statistics.incorrect
     )))
