@@ -26,3 +26,6 @@ dist-ssr
 # Scala
 target
 *.class
+
+# Firebase
+hosting.*.cache
